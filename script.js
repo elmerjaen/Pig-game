@@ -5,6 +5,7 @@ const body = document.querySelector('body');
 const main = document.querySelector('main');
 const current = document.querySelector('.current');
 
+// the class for the querySelect always need the dot
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 
@@ -21,8 +22,6 @@ const diceEl = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
-
-// const playerEL = document.querySelector('.player');
 
 let scores, currentScore, activePlayer, playing;
 const init = function () {
@@ -59,8 +58,7 @@ init();
 
 const switchPlayer = function () {
   currentScore = 0;
-  document.getElementById(`current--${activePlayer}`).textContent =
-    currentScore;
+  document.getElementById(`current--${activePlayer}`).textContent = currentScore;
   activePlayer = activePlayer === 0 ? 1 : 0;
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
@@ -70,17 +68,15 @@ btnRoll.addEventListener('click', function () {
   if (playing) {
     const diceRoll = Math.floor(Math.random() * (7 - 1) + 1); // generate random dice roll
 
-    // display dice roll
+    // Display dice roll
     diceEl.classList.remove('hidden');
     diceEl.src = `img/dice-${diceRoll}.png`;
 
     if (diceRoll !== 1) {
       // Add the dice to current score
       currentScore += diceRoll;
-      document.getElementById(`current--${activePlayer}`).textContent =
-        currentScore;
+      document.getElementById(`current--${activePlayer}`).textContent = currentScore;
     } else {
-      // Switch to next player
       switchPlayer();
     }
   }
@@ -89,8 +85,7 @@ btnRoll.addEventListener('click', function () {
 btnHold.addEventListener('click', function () {
   if (playing) {
     scores[activePlayer] += currentScore;
-    document.getElementById(`score--${activePlayer}`).textContent =
-      scores[activePlayer];
+    document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
     if (scores[activePlayer] >= 20) {
       // Finish the game
       playing = false;
@@ -99,22 +94,13 @@ btnHold.addEventListener('click', function () {
       main.classList.add('winner--main');
       current.classList.add('winner--current');
 
-      document.getElementById(`name--${activePlayer}`).textContent = `Player ${
-        activePlayer + 1
-      } Wins`;
+      document.getElementById(`name--${activePlayer}`).textContent = `🏆 Player ${activePlayer + 1} Wins 🏆`;
       diceEl.classList.add('hidden');
-      document
-        .querySelector(`.player--${activePlayer === 1 ? 0 : 1}`)
-        .classList.add('hidden');
+      document.querySelector(`.player--${activePlayer === 1 ? 0 : 1}`).classList.add('hidden');
       btnRoll.classList.add('hidden');
       btnHold.classList.add('hidden');
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.add('player--winner');
-      document
-        // the class for the querySelect always need the dot
-        .querySelector(`.player--${activePlayer}`)
-        .classList.remove('player--active');
+      document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+      document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
     } else {
       switchPlayer();
     }
